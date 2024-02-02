@@ -1,0 +1,46 @@
+### Create category
+POST http://localhost:8080/categories HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Category 2"
+}
+
+### List categories
+GET http://localhost:8080/categories HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+### Get category by id
+GET http://localhost:8080/categories/728afa2b-1724-456f-b1f3-f798e8cfe7ae HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+### Create product
+POST http://localhost:8080/products HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Product 3",
+  "description": "This is product 3",
+  "price": 500,
+  "category_id": "0fe69a7a-b52f-41a8-8c28-c3b8c8825e9f",
+  "image_url": "http://localhost:8080/product-3.png"
+}
+
+### List products
+GET http://localhost:8080/products HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+### Get product by id
+GET http://localhost:8080/products/9c3548a0-a1ac-42a5-9e8d-e1c895766fe7 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+### List products by category
+GET http://localhost:8080/products/category/728afa2b-1724-456f-b1f3-f798e8cfe7ae HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json

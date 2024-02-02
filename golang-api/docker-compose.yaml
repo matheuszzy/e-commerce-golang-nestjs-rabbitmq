@@ -1,14 +1,13 @@
-version: "3"
+version: '3'
+
 services:
   mysql:
-    image: mysql:latest
-    container_name: mysql
+    image: mysql:8.0.30-debian
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: imersao17
-      MYSQL_PASSWORD: root
     ports:
       - 3306:3306
     volumes:
       - .docker/mysql:/var/lib/mysql
+      - ./init_db.sql:/docker-entrypoint-initdb.d/db.sql
