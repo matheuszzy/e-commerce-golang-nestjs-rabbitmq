@@ -28,16 +28,16 @@ export function ProductQuantityForm(props: { product: Product }) {
   const { control, trigger, register, getValues, watch, formState } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      product_id: product.id,
+      product_id: product.ID,
       quantity: 1,
     },
   });
-  const [total, setTotal] = useState(product.price * getValues()["quantity"]);
+  const [total, setTotal] = useState(product.Price * getValues()["quantity"]);
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       if (name === "quantity" || name?.includes("attributes")) {
-        setTotal(product.price * getValues()["quantity"]);
+        setTotal(product.Price * getValues()["quantity"]);
       }
     });
     return () => subscription.unsubscribe();
@@ -75,7 +75,7 @@ export function ProductQuantityForm(props: { product: Product }) {
       </Box>
       <input
         type="hidden"
-        value={props.product.id}
+        value={props.product.ID}
         {...register("product_id")}
       />
       <Controller

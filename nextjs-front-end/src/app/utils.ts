@@ -1,15 +1,25 @@
-import { Order, Product } from "./models";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export function calculateTotal(
-  items: { product: Product; quantity: number; attributes: any[] }[]
+export function searchProducts(
+  router: AppRouterInstance,
+  search: string | undefined | null,
+  category_id: string | undefined | null
 ) {
-  return items.reduce((acc, item) => {
-    return acc + item.quantity * item.product.price;
-  }, 0);
-}
+  let path = `/products`;
 
-export function calculateTotalOrder(order: Order) {
-  return order.items.reduce((acc, item) => {
-    return acc + item.quantity * item.price;
-  }, 0);
+  const urlSearchParams = new URLSearchParams();
+
+  if (search) {
+    urlSearchParams.append("search", search);
+  }
+
+  if (category_id && category_id !== "0") {
+    urlSearchParams.append("category_id", category_id);
+  }
+
+  if (urlSearchParams.toString()) {
+    path += `?${urlSearchParams.toString()}`;
+  }
+  console.log(path)
+  router.push(path);
 }

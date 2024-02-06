@@ -5,17 +5,12 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Image from "next/legacy/image";
 import { Product } from "@/app/models";
+import { ProductService } from "@/services/product.service";
 
-const product: Product = {
-  id: "1",
-  category_id: 1,
-  name: "Camisa",
-  description: "Descricao",
-  price: 189.99,
-  image_url: "https://source.unsplash.com/random?product",
-};
+async function ProductDetailPage({ params }: { params: { productId: string } }) {
 
-function ProductDetailPage({ params }: { params: { productId: string } }) {
+  const product = await new ProductService().getProduct(params.productId)
+
   return (
     <Grid2 container spacing={2}>
       <Grid2
@@ -25,15 +20,15 @@ function ProductDetailPage({ params }: { params: { productId: string } }) {
         sx={{ height: { xs: "360px", md: "unset" } }}
       >
         <Image
-          src={product.image_url}
+          src={product.ImageURL}
           layout="fill"
           objectFit="cover"
           priority
-          alt={product.name}
+          alt={product.Name}
         />
       </Grid2>
       <Grid2 xs={12} md={5}>
-        <Typography variant="h4">{product.name}</Typography>
+        <Typography variant="h4">{product.Name}</Typography>
         <Box
           mt={2}
           sx={{
@@ -44,7 +39,7 @@ function ProductDetailPage({ params }: { params: { productId: string } }) {
           <DescriptionIcon />
           <Typography variant="button">Descrição</Typography>
         </Box>
-        <Typography sx={{ mt: 2, ml: 3 }}>{product.description}</Typography>
+        <Typography sx={{ mt: 2, ml: 3 }}>{product.Description}</Typography>
         <Box
           mt={2}
           sx={{
@@ -60,7 +55,7 @@ function ProductDetailPage({ params }: { params: { productId: string } }) {
           {new Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
-          }).format(product.price)}
+          }).format(product.Price)}
         </Typography>
         <Card sx={{ mt: 1 }} raised={true}>
           <CardContent>{<ProductQuantityForm product={product} />}</CardContent>

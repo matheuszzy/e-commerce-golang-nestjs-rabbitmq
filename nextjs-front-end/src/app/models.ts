@@ -1,15 +1,15 @@
 export type Category = {
-	id: number;
-	name: string;
+	ID: number;
+	Name: string;
   };
   
   export type Product = {
-	id: string;
-	name: string;
-	description: string;
-	image_url: string;
-	price: number;
-	category_id: number;
+	ID: string;
+	Name: string;
+	Description: string;
+	ImageURL: string;
+	Price: number;
+	CategoryID: number;
   };
   
   export enum OrderStatus {
