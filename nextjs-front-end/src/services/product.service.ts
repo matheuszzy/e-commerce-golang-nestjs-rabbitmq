@@ -48,7 +48,7 @@ export class ProductService {
 
   async getProduct(productId: string): Promise<Product> {
     const response = await fetch(
-      `${process.env.CATALOG_API_URL}/product/${productId}`,
+      `${process.env.CATALOG_API_URL}/products/${productId}`,
       {
         next: {
           revalidate: 1,

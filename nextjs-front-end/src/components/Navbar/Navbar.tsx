@@ -7,9 +7,11 @@ import Image from "next/legacy/image";
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { CategoryService } from "../../services/category.service";
+import { AuthService } from "@/services/auth.service";
 
 export async function Navbar() {
   const categories = await new CategoryService().getCategories();
+  const user = new AuthService().getUser()
   return (
     <AppBar position="fixed">
       <Toolbar sx={{ backgroundColor: "background.paper" }}>
@@ -32,7 +34,7 @@ export async function Navbar() {
         <IconButton LinkComponent={Link} size="large" href="/my-cart">
           <ShoppingCartIcon />
         </IconButton>
-        <UserMenu user={{}} />
+        <UserMenu user={user} />
       </Toolbar>
       <Toolbar
         sx={{

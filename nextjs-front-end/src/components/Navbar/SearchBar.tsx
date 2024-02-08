@@ -59,7 +59,6 @@ export function SearchBar() {
           const formData = new FormData(event.target as HTMLFormElement);
           const search = formData.get('search') as string;
           const category_id = searchParams.get('category_id');
-          console.log(category_id, search)
           searchProducts(router, search, category_id);
         }}
       >

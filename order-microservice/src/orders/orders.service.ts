@@ -69,4 +69,23 @@ export class OrdersService {
       client_id,
     });
   }
+
+  async pay(id: string) {
+    const order = await this.orderRepo.findOneByOrFail({
+      id,
+    });
+    order.pay();
+    await this.orderRepo.save(order);
+    return order;
+  }
+
+  async fail(id: string) {
+    console.log(id);
+    const order = await this.orderRepo.findOneByOrFail({
+      id,
+    });
+    order.fail();
+    await this.orderRepo.save(order);
+    return order;
+  }
 }

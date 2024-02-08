@@ -20,6 +20,5 @@ export function searchProducts(
   if (urlSearchParams.toString()) {
     path += `?${urlSearchParams.toString()}`;
   }
-  console.log(path)
   router.push(path);
 }

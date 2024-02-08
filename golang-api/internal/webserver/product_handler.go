@@ -2,6 +2,7 @@ package webserver
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -48,7 +49,7 @@ func (wph *WebProductHandler) GetProduct(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "id is required", http.StatusBadRequest)
 		return
 	}
-
+	fmt.Println(id)
 	product, err := wph.ProductService.GetProduct(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

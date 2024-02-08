@@ -11,53 +11,17 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { redirect } from "next/navigation";
-import { Product } from "../models";
 import { CheckoutForm } from "./CheckoutForm";
+import { CartServiceFactory } from "@/services/cart.service";
+import { ProductService } from "@/services/product.service";
 
-const products: Product[] = [
-  {
-    id: "1",
-    name: "Produto 1",
-    description: "Eita",
-    price: 189.99,
-    category_id: 1,
-    image_url: "https://source.unsplash.com/random?product",
-  },
-  {
-    id: "2",
-    name: "Produto 1",
-    description: "Eita",
-    price: 189.99,
-    category_id: 1,
-    image_url: "https://source.unsplash.com/random?product",
-  },
-  {
-    id: "3",
-    name: "Produto 1",
-    description: "Eita",
-    price: 189.99,
-    category_id: 1,
-    image_url: "https://source.unsplash.com/random?product",
-  },
-];
+async function CreckoutPage() {
+  const cart = CartServiceFactory.create().getCart();
+  const productService = new ProductService();
+  const products = await productService.getProductsByIds(
+    cart.items.map((item) => item.product_id)
+  );
 
-const cart = {
-  items: [
-    {
-      product_id: "1",
-      quantity: 1,
-      total: 189.99,
-    },
-    {
-      product_id: "2",
-      quantity: 1,
-      total: 189.99,
-    },
-  ],
-  total: 189.99,
-};
-
-function CreckoutPage() {
   if (cart.items.length === 0) {
     return redirect("/my-cart");
   }
@@ -85,11 +49,12 @@ function CreckoutPage() {
             <TableBody>
               {cart.items.map((item, key) => {
                 const product = products.find(
-                  (product) => product.id == item.product_id
+                  (product) => product.ID == item.product_id
                 )!;
+                console.log(product)
                 return (
                   <TableRow key={key}>
-                    <TableCell>{product.name}</TableCell>
+                    <TableCell>{product.Name}</TableCell>
                     <TableCell>{item.quantity}</TableCell>
                     <TableCell>
                       {new Intl.NumberFormat("pt-BR", {

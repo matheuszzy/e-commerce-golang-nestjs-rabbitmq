@@ -9,34 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { calculateTotalOrder } from "../utils";
-import { Order, OrderStatus } from "../models";
-
-const orders: Order[] = [
-  {
-    id: "1",
-    status: OrderStatus.PENDING,
-    created_at: new Date().toUTCString(),
-    items: [
-      {
-        id: 1,
-        product: {
-          id: "1",
-          name: "Produto 1",
-          description: "Eita",
-          price: 189.99,
-          category_id: 1,
-          image_url: "https://source.unsplash.com/random?product",
-        },
-        quantity: 1,
-        price: 189.99,
-      },
-    ],
-    total: 189.99,
-  },
-];
+import { OrderServiceFactory } from "../../services/order.service";
+import { OrderStatus } from "../models";
 
 export async function MyOrdersListPage() {
+  const orders = await OrderServiceFactory.create().getOrders();
   return (
     <Box>
       <Typography variant="h4">Meus pedidos</Typography>
@@ -62,30 +39,28 @@ export async function MyOrdersListPage() {
                   {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
-                  }).format(calculateTotalOrder(order))}
+                  }).format(order.total)}
                 </TableCell>
                 <TableCell>
                   {order.status === OrderStatus.PENDING ? (
                     <Typography variant="h5" sx={{ color: "warning.main" }}>
-                      ⌛
+                      ⏳
                     </Typography>
                   ) : order.status === OrderStatus.PAID ? (
                     <Typography variant="h5" sx={{ color: "success.main" }}>
-                      ✓
+                      ✔
                     </Typography>
                   ) : (
                     <Typography variant="h5" sx={{ color: "error.main" }}>
-                      X
+                      ✖
                     </Typography>
                   )}
                 </TableCell>
-
                 <TableCell>
                   <Button
                     variant="contained"
                     component={Link}
-                    href={`/my-orders/${order.id}`}
-                  >
+                    href={`/my-orders/${order.id}`}>
                     Detalhes
                   </Button>
                 </TableCell>

@@ -1,6 +1,3 @@
-import { Order, OrderStatus } from "@/app/models";
-import { calculateTotalOrder } from "@/app/utils";
-import { Total } from "@/components/Total";
 import {
   Box,
   Table,
@@ -11,30 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-
-const order: Order = {
-  id: "1",
-  status: OrderStatus.PENDING,
-  created_at: new Date().toUTCString(),
-  items: [
-    {
-      id: 1,
-      product: {
-        id: "1",
-        name: "Produto 1",
-        description: "Eita",
-        price: 189.99,
-        category_id: 1,
-        image_url: "https://source.unsplash.com/random?product",
-      },
-      quantity: 1,
-      price: 189.99,
-    },
-  ],
-  total: 189.99,
-};
+import { Total } from "../../../components/Total";
+import { OrderServiceFactory } from "../../../services/order.service";
+import { OrderStatus } from "@/app/models";
 
 async function MyOrderDetail({ params }: { params: { orderId: string } }) {
+  const order = await OrderServiceFactory.create().getOrder(params.orderId);
   return (
     <Box>
       <Grid2 container spacing={2}>
@@ -44,25 +23,23 @@ async function MyOrderDetail({ params }: { params: { orderId: string } }) {
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
-            }}
-          >
+            }}>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
-              }}
-            >
+              }}>
               {order.status === OrderStatus.PENDING ? (
                 <Typography variant="h1" sx={{ color: "warning.main" }}>
-                  ⌛
+                  ⏳
                 </Typography>
               ) : order.status === OrderStatus.PAID ? (
                 <Typography variant="h1" sx={{ color: "success.main" }}>
-                  ✓
+                  ✔
                 </Typography>
               ) : (
                 <Typography variant="h1" sx={{ color: "error.main" }}>
-                  X
+                  ✖
                 </Typography>
               )}
             </Box>
@@ -100,11 +77,10 @@ async function MyOrderDetail({ params }: { params: { orderId: string } }) {
                   </TableRow>
                 );
               })}
-
               <TableRow>
                 <TableCell colSpan={3}>
                   <Box sx={{ display: "flex", justifyContent: "end" }}>
-                    <Total total={calculateTotalOrder(order)} />
+                    <Total total={order.total} />
                   </Box>
                 </TableCell>
               </TableRow>

@@ -11,7 +11,7 @@ export type Category = {
 	Price: number;
 	CategoryID: number;
   };
-  
+
   export enum OrderStatus {
 	PENDING = "pending",
 	PAID = "paid",
@@ -30,5 +30,14 @@ export type Category = {
 	id: number;
 	quantity: number;
 	price: number;
-	product: Product;
+	product: ProductOrder;
   };
+
+  export type ProductOrder = {
+	id: string;
+	name: string;
+	description: string;
+	image_url: string;
+	price: number;
+	category_id: number;
+  }

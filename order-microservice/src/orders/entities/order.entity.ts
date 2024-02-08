@@ -39,7 +39,10 @@ export class Order {
   @CreateDateColumn()
   created_at: Date;
 
-  @OneToMany(() => OrderItem, (item) => item.order, { cascade: ['insert'] })
+  @OneToMany(() => OrderItem, (item) => item.order, {
+    cascade: ['insert'],
+    eager: true,
+  })
   items: OrderItem[];
 
   static create(input: createOrderCommand) {
@@ -58,5 +61,25 @@ export class Order {
     }, 0);
 
     return order;
+  }
+
+  pay() {
+    if (this.status === OrderStatus.PAID) {
+      throw new Error('Order already paid');
+    }
+    if (this.status === OrderStatus.FAILED) {
+      throw new Error('Order already failed');
+    }
+    this.status = OrderStatus.PAID;
+  }
+
+  fail() {
+    if (this.status === OrderStatus.FAILED) {
+      throw new Error('Order already failed');
+    }
+    if (this.status === OrderStatus.PAID) {
+      throw new Error('Order already paid');
+    }
+    this.status = OrderStatus.FAILED;
   }
 }

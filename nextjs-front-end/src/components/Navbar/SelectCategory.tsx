@@ -19,10 +19,9 @@ export function SelectCategory({ categories }: { categories: Category[] }) {
         onChange={(event) => {
           const search = searchParams.get("search");
           const category_id = event.target.value as string;
-          console.log(event.target)
           searchProducts(router, search, category_id);
         }}>
-        {/* <MenuItem value="0">Todas as categorias</MenuItem> */}
+        <MenuItem value="0">Todas as categorias</MenuItem>
         {categories.map((category) => (
           <MenuItem key={category.Name} value={category.ID}>
             {category.Name}
