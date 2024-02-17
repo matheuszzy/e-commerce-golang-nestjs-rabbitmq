@@ -2,6 +2,11 @@
 - Sistema desenvolvido com base na imersão full cycle, possui as funcionalidades de um ecommerce construído com base em microserviços e focando a escalabilidade do sistema.
 
 ## **Requisitos**
+- Criação de pedido.
+- Carrinho de compras.
+- Criação de ordem de pagamento.
+- Processamento dos pagamentos.
+- Histórico e datalhado de todos os pedidos.
 
 ## **Tecnologias utilizadas**
 * Golang
